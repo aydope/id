@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+
+    <title>Mohammad Amin Sadeghi · Digital Identity Card</title>
+    <meta
+      name="description"
+      content="Digital identity card of Mohammad Amin Sadeghi — Software Engineer. Verified digital ID with contact info, social links, QR code and barcode."
+    />
+    <meta
+      name="keywords"
+      content="Mohammad Amin Sadeghi, aydope, Software Engineer, Digital ID, Identity Card, Developer Portfolio, Full Stack Developer"
+    />
+    <meta name="author" content="Mohammad Amin Sadeghi" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#06060a" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="canonical" href="https://aydope.github.io/" />
+
+    <meta property="og:type" content="profile" />
+    <meta
+      property="og:title"
+      content="Mohammad Amin Sadeghi · Digital Identity Card"
+    />
+    <meta
+      property="og:description"
+      content="Software Engineer · Verified Digital ID. Scan the QR to visit aydope.github.io"
+    />
+    <meta property="og:url" content="https://aydope.github.io/" />
+    <meta property="og:site_name" content="Digital Identity Authority" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Mohammad Amin" />
+    <meta property="profile:last_name" content="Sadeghi" />
+    <meta property="profile:username" content="aydope" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Mohammad Amin Sadeghi · Digital Identity Card"
+    />
+    <meta
+      name="twitter:description"
+      content="Software Engineer · Verified Digital ID · aydope.github.io"
+    />
+    <meta name="twitter:creator" content="@_aydope" />
+    <meta name="twitter:site" content="@_aydope" />
+
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Amin's ID" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mohammad Amin Sadeghi",
+        "alternateName": "aydope",
+        "jobTitle": "Software Engineer",
+        "url": "https://aydope.github.io/",
+        "email": "mailto:amin0xa1b@gmail.com",
+        "telephone": "+989915867462",
+        "nationality": "Iran",
+        "sameAs": [
+          "https://x.com/_aydope",
+          "https://instagram.com/aydope.r",
+          "https://linkedin.com/in/mohammad-amin-sadeghi",
+          "https://github.com/aydope",
+          "https://t.me/aydope",
+          "https://youtube.com/@aydope",
+          "https://aydope.github.io/"
+        ]
+      }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Dancing+Script:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="src/styles.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+  </head>
+  <body>
+    <div class="scene">
+      <div
+        class="card-flipper"
+        id="cardFlipper"
+        aria-label="Digital ID Card"
+        role="button"
+      >
+        <div class="card-face card-front">
+          <div class="holo-strip"></div>
+
+          <div class="id-header">
+            <div class="id-header-left">
+              <div class="id-authority">Digital Identity Authority</div>
+              <div class="id-authority-sub">IDENTITY CARD · VERIFIED</div>
+            </div>
+            <div class="id-header-right">
+              <div class="id-chip" aria-hidden="true">
+                <svg
+                  class="id-chip-svg"
+                  viewBox="0 0 40 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="chipGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#f2e5bc" />
+                      <stop offset="20%" stop-color="#d9c88d" />
+                      <stop offset="50%" stop-color="#c1ac6b" />
+                      <stop offset="80%" stop-color="#d9c88d" />
+                      <stop offset="100%" stop-color="#f2e5bc" />
+                    </linearGradient>
+                    <linearGradient id="chipSheen" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(255,255,255,0.5)" />
+                      <stop offset="50%" stop-color="rgba(255,255,255,0)" />
+                      <stop offset="100%" stop-color="rgba(0,0,0,0.15)" />
+                    </linearGradient>
+                  </defs>
+                  <rect
+                    x="0"
+                    y="0"
+                    width="40"
+                    height="32"
+                    rx="4"
+                    fill="url(#chipGrad)"
+                  />
+                  <line
+                    x1="3"
+                    y1="16"
+                    x2="37"
+                    y2="16"
+                    stroke="rgba(120,95,40,0.7)"
+                    stroke-width="0.9"
+                  />
+                  <line
+                    x1="14"
+                    y1="3"
+                    x2="14"
+                    y2="29"
+                    stroke="rgba(120,95,40,0.7)"
+                    stroke-width="0.9"
+                  />
+                  <line
+                    x1="26"
+                    y1="3"
+                    x2="26"
+                    y2="29"
+                    stroke="rgba(120,95,40,0.7)"
+                    stroke-width="0.9"
+                  />
+                  <rect
+                    x="2.5"
+                    y="2.5"
+                    width="35"
+                    height="27"
+                    rx="3"
+                    fill="none"
+                    stroke="rgba(90,70,30,0.35)"
+                    stroke-width="0.5"
+                  />
+                  <circle cx="8" cy="9.5" r="0.7" fill="rgba(90,70,30,0.5)" />
+                  <circle cx="20" cy="9.5" r="0.7" fill="rgba(90,70,30,0.5)" />
+                  <circle cx="32" cy="9.5" r="0.7" fill="rgba(90,70,30,0.5)" />
+                  <circle cx="8" cy="22.5" r="0.7" fill="rgba(90,70,30,0.5)" />
+                  <circle cx="20" cy="22.5" r="0.7" fill="rgba(90,70,30,0.5)" />
+                  <circle cx="32" cy="22.5" r="0.7" fill="rgba(90,70,30,0.5)" />
+                  <rect
+                    x="0"
+                    y="0"
+                    width="40"
+                    height="32"
+                    rx="4"
+                    fill="url(#chipSheen)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="id-body">
+            <div class="id-photo-wrap">
+              <div class="id-photo" id="idPhoto" title="Double-click to zoom">
+                <img
+                  src="https://avatars.githubusercontent.com/u/239071226?v=4"
+                  alt="Mohammad Amin Sadeghi"
+                />
+                <div class="id-holo-strip" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="id-details">
+              <div class="microprint">
+                THIS ID IS PROPERTY OF DIGITAL IDENTITY AUTHORITY · UNAUTHORIZED
+                REPRODUCTION PROHIBITED · AMN-2006-0001 · IRN ·
+              </div>
+
+              <div class="id-name-big">SADEGHI,<br />MOHAMMAD AMIN</div>
+              <div class="id-role">Software Engineer</div>
+
+              <div class="id-info-grid">
+                <div class="id-field">
+                  <span class="id-label">ID NO.</span>
+                  <span class="id-value">AMN-2006-0001</span>
+                </div>
+                <div class="id-field">
+                  <span class="id-label">NATION</span>
+                  <span class="id-value">IRAN</span>
+                </div>
+                <div class="id-field">
+                  <span class="id-label">DATE OF BIRTH</span>
+                  <span class="id-value">01 JUN 2006</span>
+                </div>
+                <div class="id-field">
+                  <span class="id-label">SEX</span>
+                  <span class="id-value">MALE</span>
+                </div>
+                <div class="id-field">
+                  <span class="id-label">ISSUED</span>
+                  <span class="id-value">01 JUN 2024</span>
+                </div>
+                <div class="id-field">
+                  <span class="id-label">EXPIRES</span>
+                  <span class="id-value">01 JUN 2030</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="id-footer">
+            <div class="signature-block">
+              <div class="signature-label">SIGNATURE</div>
+              <div class="signature">M. A. Sadeghi</div>
+            </div>
+
+            <div class="fingerprint" aria-hidden="true">
+              <svg viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
+                <g
+                  fill="none"
+                  stroke="#c8d6e6"
+                  stroke-width="1.3"
+                  stroke-linecap="round"
+                  opacity="0.9"
+                >
+                  <path
+                    d="M14 40 Q14 22 32 22 Q50 22 50 40 Q50 60 32 60 Q22 60 20 50"
+                  />
+                  <path
+                    d="M20 42 Q20 28 32 28 Q44 28 44 42 Q44 54 32 54 Q26 54 26 46"
+                  />
+                  <path
+                    d="M26 44 Q26 34 32 34 Q38 34 38 44 Q38 50 32 50 Q30 50 30 46"
+                  />
+                  <path d="M30 46 Q30 42 32 42 Q34 42 34 46" />
+                  <path d="M10 34 Q12 20 26 16 Q42 12 54 22" />
+                  <path d="M10 46 Q10 66 30 72 Q50 76 56 60" />
+                  <path d="M16 48 Q16 60 30 64 Q44 66 48 56" />
+                  <path d="M22 50 Q22 56 32 58 Q42 58 42 50" />
+                  <path d="M8 40 Q8 24 24 18" />
+                  <path d="M56 34 Q58 46 52 56" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="mrz">
+            IDIRN&lt;&lt;SADEGHI&lt;&lt;&lt;MOHAMMAD&lt;AMIN&lt;&lt;&lt;&lt;&lt;&lt;AMN20060001
+          </div>
+        </div>
+
+        <div class="card-face card-back">
+          <div class="mag-stripe"></div>
+
+          <div class="back-header">
+            <div class="back-title">Connect</div>
+            <div class="back-handle">@aydope</div>
+          </div>
+
+          <div class="contact-row">
+            <div
+              class="contact-item"
+              data-copy="+989915867462"
+              aria-label="Phone"
+            >
+              <i class="fa-solid fa-phone"></i>
+              <span class="contact-text">+98 991 586 7462</span>
+            </div>
+            <div
+              class="contact-item"
+              data-copy="amin0xa1b@gmail.com"
+              aria-label="Email"
+            >
+              <i class="fa-solid fa-envelope"></i>
+              <span class="contact-text">amin0xa1b@gmail.com</span>
+            </div>
+          </div>
+
+          <div class="back-body">
+            <div class="back-main">
+              <div class="social-grid">
+                <a
+                  href="https://x.com/_aydope"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-item"
+                  aria-label="X"
+                >
+                  <i class="fa-brands fa-x-twitter"></i>
+                  <span>X</span>
+                </a>
+                <a
+                  href="https://instagram.com/aydope.r"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-item"
+                  aria-label="Instagram"
+                >
+                  <i class="fa-brands fa-instagram"></i>
+                  <span>IG</span>
+                </a>
+                <a
+                  href="https://linkedin.com/in/mohammad-amin-sadeghi"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-item"
+                  aria-label="LinkedIn"
+                >
+                  <i class="fa-brands fa-linkedin-in"></i>
+                  <span>IN</span>
+                </a>
+                <a
+                  href="https://github.com/aydope"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-item"
+                  aria-label="GitHub"
+                >
+                  <i class="fa-brands fa-github"></i>
+                  <span>GH</span>
+                </a>
+                <a
+                  href="https://t.me/aydope"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-item"
+                  aria-label="Telegram"
+                >
+                  <i class="fa-brands fa-telegram"></i>
+                  <span>TG</span>
+                </a>
+                <a
+                  href="https://youtube.com/@aydope"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-item"
+                  aria-label="YouTube"
+                >
+                  <i class="fa-brands fa-youtube"></i>
+                  <span>YT</span>
+                </a>
+                <a
+                  href="https://aydope.github.io"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-item wide"
+                  aria-label="Website"
+                >
+                  <i class="fa-solid fa-globe"></i>
+                  <span>aydope.github.io</span>
+                </a>
+              </div>
+
+              <div class="qr-block">
+                <div class="qr-frame">
+                  <div id="qrcode"></div>
+                </div>
+                <div class="qr-label">
+                  <strong>SCAN ME</strong>
+                  aydope.github.io
+                </div>
+              </div>
+            </div>
+
+            <div class="barcode-row">
+              <div class="barcode-svg-wrap">
+                <svg class="barcode-svg" id="barcodeSvg"></svg>
+              </div>
+              <div class="barcode-label">AMN-2006-0001 · IRN</div>
+            </div>
+
+            <div class="back-footer">
+              <div>
+                <span>ISSUED 2024</span>
+                <span class="dot"></span>
+                <span>EXP 2030</span>
+              </div>
+              <div>VERIFIED&nbsp;·&nbsp;DIGITAL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-hint">
+        <i class="fa-solid fa-rotate"></i>
+        <span>Drag or click to flip</span>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <i class="fa-solid fa-check"></i>
+      <span id="toastText">Copied</span>
+    </div>
+
+    <div class="zoom-modal" id="zoomModal">
+      <div class="zoom-close" id="zoomClose">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <img id="zoomImg" src="" alt="Zoomed" />
+    </div>
+    <script src="src/main.js"></script>
+  </body>
+</html>
