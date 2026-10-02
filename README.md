@@ -49,10 +49,11 @@ No build step. No dependencies to install. Just open `index.html`.
 ```
 id/
 ├── src/
-    |   main.js
-    └── styles.css
+│   ├── main.js
+│   └── styles.css
 ├── index.html
-└── README.md
+├── README.md
+└── LICENSE
 ```
 
 The entire card lives in a single `index.html` file — styles, markup, and scripts are all inline. This keeps deployment dead-simple and makes the file portable.
