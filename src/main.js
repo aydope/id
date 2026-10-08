@@ -1,209 +1,214 @@
-(function () {
-  const qrTarget = "https://aydope.github.io";
-  function qrSize() {
-    const w = window.innerWidth;
-    if (w <= 340) return 140;
-    if (w <= 400) return 150;
-    if (w <= 460) return 160;
-    return 180;
-  }
+(() => {
+  "use strict";
+  const $ = (s) => document.querySelector(s);
+  const flipper = $("#cardFlipper");
+  const front = $(".card-front");
+  const back = $(".card-back");
+  const toast = $("#toast");
+  const toastText = $("#toastText");
+  const zoomModal = $("#zoomModal");
+  const zoomImg = $("#zoomImg");
+  const SITE = "https://aydope.github.io";
+  const ID_NO = "AMN-2006-0001";
 
-  function initQR() {
-    const qrEl = document.getElementById("qrcode");
-    if (!qrEl || typeof QRCode === "undefined") {
-      setTimeout(initQR, 150);
-      return;
-    }
-    qrEl.innerHTML = "";
-    const size = qrSize();
-    new QRCode(qrEl, {
-      text: qrTarget,
-      width: size,
-      height: size,
-      colorDark: "#0a0a0d",
-      colorLight: "#f5f5f1",
-      correctLevel: QRCode.CorrectLevel.H,
-    });
-  }
-  initQR();
+  /* ---------- Flip / drag ---------- */
+  let rot = 0,
+    startX = 0,
+    startRot = 0,
+    down = false,
+    moved = false,
+    tapOnPhoto = false;
 
-  function initBarcode() {
-    const svg = document.getElementById("barcodeSvg");
-    if (!svg || typeof JsBarcode === "undefined") {
-      setTimeout(initBarcode, 200);
-      return;
-    }
-    try {
-      JsBarcode(svg, "AMN20060001IRN", {
-        format: "CODE128",
-        width: 1.6,
-        height: 50,
-        displayValue: false,
-        margin: 0,
-        background: "transparent",
-        lineColor: "#0a0a0d",
-      });
-    } catch (e) {
-      console.warn("Barcode error:", e);
-    }
-  }
-  initBarcode();
-
-  const flipper = document.getElementById("cardFlipper");
-  let rotationY = 0;
-  let baseRotation = 0;
-  let isDragging = false;
-  let dragStartX = 0;
-  let dragStartRotation = 0;
-  let dragMoved = false;
-
-  function applyRotation() {
-    flipper.style.transform = `rotateY(${rotationY}deg)`;
-  }
-
-  function snapToBase() {
-    const target = Math.round(rotationY / 180) * 180;
-    rotationY = target;
-    baseRotation = ((rotationY % 360) + 360) % 360;
-    flipper.style.transition = "transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)";
-    applyRotation();
-    setTimeout(() => {
-      flipper.style.transition = "";
-    }, 900);
-  }
-
-  function toggleFlip() {
-    if (isDragging) return;
-    baseRotation = baseRotation === 0 ? 180 : 0;
-    rotationY = baseRotation;
-    flipper.style.transition = "transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)";
-    applyRotation();
-    setTimeout(() => {
-      flipper.style.transition = "";
-    }, 900);
-  }
+  const render = () => flipper.style.setProperty("--ry", rot + "deg");
+  const syncFaces = () => {
+    const frontVisible = ((Math.round(rot / 180) % 2) + 2) % 2 === 0;
+    front.inert = !frontVisible;
+    back.inert = frontVisible;
+    front.setAttribute("aria-hidden", String(!frontVisible));
+    back.setAttribute("aria-hidden", String(frontVisible));
+  };
+  const flip = () => {
+    rot = (Math.round(rot / 180) + 1) * 180;
+    render();
+    syncFaces();
+  };
 
   flipper.addEventListener("pointerdown", (e) => {
-    if (
-      e.target.closest(".social-item") ||
-      e.target.closest(".contact-item") ||
-      e.target.closest(".id-photo")
-    )
-      return;
-    isDragging = true;
-    dragMoved = false;
-    dragStartX = e.clientX;
-    dragStartRotation = rotationY;
-    flipper.classList.add("dragging");
-    try {
-      flipper.setPointerCapture(e.pointerId);
-    } catch (_) {}
+    if (e.button > 0 || e.target.closest("a,.contact-item")) return;
+    down = true;
+    moved = false;
+    startX = e.clientX;
+    startRot = rot;
+    tapOnPhoto = !!e.target.closest("#idPhoto");
+    flipper.setPointerCapture(e.pointerId);
   });
-
   flipper.addEventListener("pointermove", (e) => {
-    if (!isDragging) return;
-    const dx = e.clientX - dragStartX;
-    if (Math.abs(dx) > 4) dragMoved = true;
-    rotationY = dragStartRotation + dx * 0.6;
-    applyRotation();
-  });
-
-  flipper.addEventListener("pointerup", (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    flipper.classList.remove("dragging");
-    try {
-      flipper.releasePointerCapture(e.pointerId);
-    } catch (_) {}
-
-    if (dragMoved) snapToBase();
-    else toggleFlip();
-  });
-
-  flipper.addEventListener("pointercancel", () => {
-    if (!isDragging) return;
-    isDragging = false;
-    flipper.classList.remove("dragging");
-    snapToBase();
-  });
-
-  const idPhoto = document.getElementById("idPhoto");
-  const zoomModal = document.getElementById("zoomModal");
-  const zoomImg = document.getElementById("zoomImg");
-  const zoomClose = document.getElementById("zoomClose");
-  const photoSrc = idPhoto.querySelector("img").src;
-
-  function openZoom() {
-    zoomImg.src = photoSrc;
-    zoomModal.classList.add("open");
-  }
-  function closeZoom() {
-    zoomModal.classList.remove("open");
-  }
-
-  idPhoto.addEventListener("dblclick", (e) => {
-    e.stopPropagation();
-    openZoom();
-  });
-
-  zoomModal.addEventListener("click", (e) => {
-    if (
-      e.target === zoomModal ||
-      e.target === zoomClose ||
-      e.target.closest(".zoom-close")
-    ) {
-      closeZoom();
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (!moved && Math.abs(dx) > 6) {
+      moved = true;
+      flipper.classList.add("dragging");
+    }
+    if (moved) {
+      rot = startRot + dx * 0.5;
+      render();
     }
   });
+  const end = () => {
+    if (!down) return;
+    down = false;
+    flipper.classList.remove("dragging");
+    if (moved) {
+      rot = Math.round(rot / 180) * 180;
+      render();
+      syncFaces();
+    } else if (!tapOnPhoto) flip();
+  };
+  flipper.addEventListener("pointerup", end);
+  flipper.addEventListener("pointercancel", () => {
+    down = false;
+    flipper.classList.remove("dragging");
+    rot = Math.round(rot / 180) * 180;
+    render();
+  });
+  flipper.addEventListener("keydown", (e) => {
+    if (e.target !== flipper) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      flip();
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      e.preventDefault();
+      flip();
+    }
+  });
+  syncFaces();
 
-  const toast = document.getElementById("toast");
-  const toastText = document.getElementById("toastText");
+  /* ---------- Copy to clipboard ---------- */
   let toastTimer;
-
-  function showToast(msg) {
+  const showToast = (msg) => {
     toastText.textContent = msg;
     toast.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
-  }
-
-  document.querySelectorAll(".contact-item").forEach((item) => {
-    item.addEventListener("click", async (e) => {
-      e.stopPropagation();
-      const value = item.getAttribute("data-copy");
-      if (!value) return;
+  };
+  const copyText = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const t = document.createElement("textarea");
+      t.value = text;
+      t.style.cssText = "position:fixed;opacity:0";
+      document.body.appendChild(t);
+      t.select();
+      let ok = false;
       try {
-        await navigator.clipboard.writeText(value);
-      } catch (_) {
-        const ta = document.createElement("textarea");
-        ta.value = value;
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          document.execCommand("copy");
-        } catch (e2) {}
-        document.body.removeChild(ta);
+        ok = document.execCommand("copy");
+      } catch {}
+      t.remove();
+      return ok;
+    }
+  };
+  document.querySelectorAll(".contact-item").forEach((el) => {
+    const act = async () =>
+      showToast((await copyText(el.dataset.copy)) ? "Copied" : "Copy failed");
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+      act();
+    });
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        e.stopPropagation();
+        act();
       }
-      item.classList.add("copied");
-      setTimeout(() => item.classList.remove("copied"), 900);
-      showToast("Copied: " + value);
     });
   });
 
-  document.querySelectorAll("img").forEach((img) => {
-    img.addEventListener("dragstart", (e) => e.preventDefault());
+  /* ---------- Photo zoom ---------- */
+  const openZoom = () => {
+    zoomImg.src = $("#idPhoto img").src;
+    zoomModal.classList.add("open");
+    $("#zoomClose").focus();
+  };
+  const closeZoom = () => {
+    zoomModal.classList.remove("open");
+    flipper.focus({ preventScroll: true });
+  };
+  $("#idPhoto").addEventListener("dblclick", openZoom);
+  zoomModal.addEventListener("click", closeZoom);
+  $("#zoomClose").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      closeZoom();
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && zoomModal.classList.contains("open")) closeZoom();
   });
 
-  let lastBucket = qrSize();
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      const newBucket = qrSize();
-      if (Math.abs(newBucket - lastBucket) >= 20) {
-        lastBucket = newBucket;
-        initQR();
+  /* ---------- QR code (regenerates on resize) ---------- */
+  const buildQR = () => {
+    const el = $("#qrcode");
+    if (!el || typeof QRCode === "undefined") return;
+    const size =
+      Math.max(
+        64,
+        Math.round(
+          el.parentElement.clientWidth * (window.devicePixelRatio || 1) * 1.5,
+        ),
+      ) || 160;
+    el.innerHTML = "";
+    new QRCode(el, {
+      text: SITE,
+      width: size,
+      height: size,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+  };
+
+  /* ---------- Barcode (Code128) ---------- */
+  const buildBarcode = () => {
+    const svg = $("#barcodeSvg");
+    if (!svg || typeof JsBarcode === "undefined") return;
+    JsBarcode(svg, ID_NO, {
+      format: "CODE128",
+      displayValue: false,
+      margin: 0,
+      height: 60,
+      width: 2,
+      background: "transparent",
+      lineColor: "#000",
+    });
+    const w = parseFloat(svg.getAttribute("width")),
+      h = parseFloat(svg.getAttribute("height"));
+    if (w && h) {
+      svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.removeAttribute("width");
+      svg.removeAttribute("height");
+    }
+  };
+
+  const init = () => {
+    buildQR();
+    buildBarcode();
+  };
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", init);
+  else init();
+
+  let rt;
+  let lastW = innerWidth;
+  addEventListener("resize", () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      if (innerWidth !== lastW) {
+        lastW = innerWidth;
+        buildQR();
       }
-    }, 300);
+    }, 200);
   });
 })();

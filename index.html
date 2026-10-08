@@ -6,11 +6,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
     />
-
     <title>Mohammad Amin Sadeghi · Digital Identity Card</title>
+
     <meta
       name="description"
-      content="Digital identity card of Mohammad Amin Sadeghi — Software Engineer. Verified digital ID with contact info, social links, QR code and barcode."
+      content="Digital identity card of Mohammad Amin Sadeghi — Software Engineer. Contact info, social links, QR code and barcode."
     />
     <meta
       name="keywords"
@@ -21,7 +21,12 @@
     <meta name="theme-color" content="#06060a" />
     <meta name="color-scheme" content="dark" />
 
-    <link rel="canonical" href="https://aydope.github.io/" />
+    <link rel="canonical" href="https://aydope.github.io/id/" />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306060a'/%3E%3Crect x='10' y='18' width='44' height='28' rx='5' fill='none' stroke='%23c8d6e6' stroke-width='3'/%3E%3Ccircle cx='24' cy='30' r='4' fill='%23c8d6e6'/%3E%3Cpath d='M33 28h14M33 35h10' stroke='%23c8d6e6' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
 
     <meta property="og:type" content="profile" />
     <meta
@@ -30,11 +35,15 @@
     />
     <meta
       property="og:description"
-      content="Software Engineer · Verified Digital ID. Scan the QR to visit aydope.github.io"
+      content="Software Engineer · Digital ID. Scan the QR to visit aydope.github.io"
     />
-    <meta property="og:url" content="https://aydope.github.io/" />
+    <meta property="og:url" content="https://aydope.github.io/id/" />
     <meta property="og:site_name" content="Digital Identity Authority" />
     <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://avatars.githubusercontent.com/u/239071226?v=4"
+    />
     <meta property="profile:first_name" content="Mohammad Amin" />
     <meta property="profile:last_name" content="Sadeghi" />
     <meta property="profile:username" content="aydope" />
@@ -46,12 +55,17 @@
     />
     <meta
       name="twitter:description"
-      content="Software Engineer · Verified Digital ID · aydope.github.io"
+      content="Software Engineer · Digital ID · aydope.github.io"
+    />
+    <meta
+      name="twitter:image"
+      content="https://avatars.githubusercontent.com/u/239071226?v=4"
     />
     <meta name="twitter:creator" content="@_aydope" />
     <meta name="twitter:site" content="@_aydope" />
 
     <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
@@ -69,20 +83,15 @@
         "url": "https://aydope.github.io/",
         "email": "mailto:amin0xa1b@gmail.com",
         "telephone": "+989915867462",
-        "nationality": "Iran",
+        "nationality": { "@type": "Country", "name": "Iran" },
         "sameAs": [
           "https://x.com/_aydope",
-          "https://instagram.com/aydope.r",
           "https://linkedin.com/in/mohammad-amin-sadeghi",
           "https://github.com/aydope",
-          "https://t.me/aydope",
-          "https://youtube.com/@aydope",
           "https://aydope.github.io/"
         ]
       }
     </script>
-
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -90,25 +99,31 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Dancing+Script:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
-
     <link rel="stylesheet" href="src/styles.css" />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
   </head>
+
   <body>
     <div class="scene">
       <div
         class="card-flipper"
         id="cardFlipper"
-        aria-label="Digital ID Card"
+        aria-label="Digital ID card. Press to flip."
         role="button"
+        tabindex="0"
       >
+        <!-- ================= FRONT ================= -->
         <div class="card-face card-front">
           <div class="holo-strip"></div>
 
@@ -205,6 +220,8 @@
                 <img
                   src="https://avatars.githubusercontent.com/u/239071226?v=4"
                   alt="Mohammad Amin Sadeghi"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
                 />
                 <div class="id-holo-strip" aria-hidden="true"></div>
               </div>
@@ -215,7 +232,6 @@
                 THIS ID IS PROPERTY OF DIGITAL IDENTITY AUTHORITY · UNAUTHORIZED
                 REPRODUCTION PROHIBITED · AMN-2006-0001 · IRN ·
               </div>
-
               <div class="id-name-big">SADEGHI,<br />MOHAMMAD AMIN</div>
               <div class="id-role">Software Engineer</div>
 
@@ -253,35 +269,6 @@
               <div class="signature-label">SIGNATURE</div>
               <div class="signature">M. A. Sadeghi</div>
             </div>
-
-            <div class="fingerprint" aria-hidden="true">
-              <svg viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
-                <g
-                  fill="none"
-                  stroke="#c8d6e6"
-                  stroke-width="1.3"
-                  stroke-linecap="round"
-                  opacity="0.9"
-                >
-                  <path
-                    d="M14 40 Q14 22 32 22 Q50 22 50 40 Q50 60 32 60 Q22 60 20 50"
-                  />
-                  <path
-                    d="M20 42 Q20 28 32 28 Q44 28 44 42 Q44 54 32 54 Q26 54 26 46"
-                  />
-                  <path
-                    d="M26 44 Q26 34 32 34 Q38 34 38 44 Q38 50 32 50 Q30 50 30 46"
-                  />
-                  <path d="M30 46 Q30 42 32 42 Q34 42 34 46" />
-                  <path d="M10 34 Q12 20 26 16 Q42 12 54 22" />
-                  <path d="M10 46 Q10 66 30 72 Q50 76 56 60" />
-                  <path d="M16 48 Q16 60 30 64 Q44 66 48 56" />
-                  <path d="M22 50 Q22 56 32 58 Q42 58 42 50" />
-                  <path d="M8 40 Q8 24 24 18" />
-                  <path d="M56 34 Q58 46 52 56" />
-                </g>
-              </svg>
-            </div>
           </div>
 
           <div class="mrz">
@@ -289,6 +276,7 @@
           </div>
         </div>
 
+        <!-- ================= BACK ================= -->
         <div class="card-face card-back">
           <div class="mag-stripe"></div>
 
@@ -301,17 +289,21 @@
             <div
               class="contact-item"
               data-copy="+989915867462"
-              aria-label="Phone"
+              aria-label="Copy phone number"
+              role="button"
+              tabindex="0"
             >
-              <i class="fa-solid fa-phone"></i>
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
               <span class="contact-text">+98 991 586 7462</span>
             </div>
             <div
               class="contact-item"
               data-copy="amin0xa1b@gmail.com"
-              aria-label="Email"
+              aria-label="Copy email address"
+              role="button"
+              tabindex="0"
             >
-              <i class="fa-solid fa-envelope"></i>
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
               <span class="contact-text">amin0xa1b@gmail.com</span>
             </div>
           </div>
@@ -322,78 +314,52 @@
                 <a
                   href="https://x.com/_aydope"
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   class="social-item"
                   aria-label="X"
                 >
-                  <i class="fa-brands fa-x-twitter"></i>
+                  <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
                   <span>X</span>
-                </a>
-                <a
-                  href="https://instagram.com/aydope.r"
-                  target="_blank"
-                  rel="noopener"
-                  class="social-item"
-                  aria-label="Instagram"
-                >
-                  <i class="fa-brands fa-instagram"></i>
-                  <span>IG</span>
                 </a>
                 <a
                   href="https://linkedin.com/in/mohammad-amin-sadeghi"
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   class="social-item"
                   aria-label="LinkedIn"
                 >
-                  <i class="fa-brands fa-linkedin-in"></i>
+                  <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
                   <span>IN</span>
                 </a>
                 <a
                   href="https://github.com/aydope"
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   class="social-item"
                   aria-label="GitHub"
                 >
-                  <i class="fa-brands fa-github"></i>
+                  <i class="fa-brands fa-github" aria-hidden="true"></i>
                   <span>GH</span>
-                </a>
-                <a
-                  href="https://t.me/aydope"
-                  target="_blank"
-                  rel="noopener"
-                  class="social-item"
-                  aria-label="Telegram"
-                >
-                  <i class="fa-brands fa-telegram"></i>
-                  <span>TG</span>
-                </a>
-                <a
-                  href="https://youtube.com/@aydope"
-                  target="_blank"
-                  rel="noopener"
-                  class="social-item"
-                  aria-label="YouTube"
-                >
-                  <i class="fa-brands fa-youtube"></i>
-                  <span>YT</span>
                 </a>
                 <a
                   href="https://aydope.github.io"
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   class="social-item wide"
                   aria-label="Website"
                 >
-                  <i class="fa-solid fa-globe"></i>
+                  <i class="fa-solid fa-globe" aria-hidden="true"></i>
                   <span>aydope.github.io</span>
                 </a>
               </div>
 
               <div class="qr-block">
                 <div class="qr-frame">
-                  <div id="qrcode"></div>
+                  <div
+                    id="qrcode"
+                    role="img"
+                    aria-label="QR code linking to aydope.github.io"
+                  ></div>
                 </div>
                 <div class="qr-label">
                   <strong>SCAN ME</strong>
@@ -404,7 +370,12 @@
 
             <div class="barcode-row">
               <div class="barcode-svg-wrap">
-                <svg class="barcode-svg" id="barcodeSvg"></svg>
+                <svg
+                  class="barcode-svg"
+                  id="barcodeSvg"
+                  role="img"
+                  aria-label="Barcode AMN-2006-0001"
+                ></svg>
               </div>
               <div class="barcode-label">AMN-2006-0001 · IRN</div>
             </div>
@@ -422,22 +393,39 @@
       </div>
 
       <div class="flip-hint">
-        <i class="fa-solid fa-rotate"></i>
+        <i class="fa-solid fa-rotate" aria-hidden="true"></i>
         <span>Drag or click to flip</span>
       </div>
     </div>
 
-    <div class="toast" id="toast">
-      <i class="fa-solid fa-check"></i>
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <i class="fa-solid fa-check" aria-hidden="true"></i>
       <span id="toastText">Copied</span>
     </div>
 
-    <div class="zoom-modal" id="zoomModal">
-      <div class="zoom-close" id="zoomClose">
-        <i class="fa-solid fa-xmark"></i>
+    <div
+      class="zoom-modal"
+      id="zoomModal"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Profile photo preview"
+    >
+      <div
+        class="zoom-close"
+        id="zoomClose"
+        role="button"
+        tabindex="0"
+        aria-label="Close preview"
+      >
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
       </div>
-      <img id="zoomImg" src="" alt="Zoomed" />
+      <img
+        id="zoomImg"
+        src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+        alt="Enlarged profile photo"
+      />
     </div>
+
     <script src="src/main.js"></script>
   </body>
 </html>
